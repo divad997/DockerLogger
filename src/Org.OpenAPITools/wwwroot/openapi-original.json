@@ -1,0 +1,72 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "contact" : {
+      "name" : "Proceedix",
+      "url" : "https://proceedix.com"
+    },
+    "description" : "Service to log messages",
+    "title" : "Logging Service",
+    "version" : "2.0.0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost/"
+  } ],
+  "paths" : {
+    "/logs/" : {
+      "post" : {
+        "operationId" : "LogMessage",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LogMessageModels"
+              }
+            }
+          },
+          "description" : "A set of log messages",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : { },
+            "description" : "Logs were succesfully queued."
+          }
+        },
+        "summary" : "Log a message",
+        "x-codegen-request-body-name" : "LogMessageModels"
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "LogMessageModels" : {
+        "items" : {
+          "$ref" : "#/components/schemas/LogMessageModels_inner"
+        },
+        "type" : "array"
+      },
+      "LogMessageModels_inner" : {
+        "properties" : {
+          "log_date" : {
+            "description" : "Unix epoch timestamp",
+            "example" : 1600935069,
+            "type" : "number"
+          },
+          "application" : {
+            "description" : "Name of the application that's logging the request",
+            "example" : "px_demo_app",
+            "type" : "string"
+          },
+          "message" : {
+            "description" : "The actual content of the log message",
+            "example" : "[error] Could not connect to the database!",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      }
+    }
+  },
+  "x-original-swagger-version" : "2.0"
+}
